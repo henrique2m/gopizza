@@ -10,5 +10,6 @@
       "@assets/*": ["./src/assets/*"],
       "@hooks/*": ["./src/hooks/*"]
     }
-  }
+  },
+  "typeRoots": ["./src/types"]
 }
