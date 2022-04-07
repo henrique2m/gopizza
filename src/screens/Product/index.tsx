@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { Platform, TouchableOpacity } from "react-native";
-
+import { Platform, ScrollView, TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-
+import { ButtonBack } from "@components/ButtonBack";
+import { Photo } from "@components/Photo";
+import { InputPrice } from "@components/InputPrice";
+import { Input } from "@components/Input";
+import { Button } from "@components/Button";
 import {
   Container,
   Header,
@@ -10,9 +13,12 @@ import {
   DeleteLabel,
   Upload,
   PickImageButton,
+  Form,
+  Label,
+  InputGroup,
+  InputGroupHeader,
+  MaxCharacters,
 } from "./style";
-import { ButtonBack } from "@components/ButtonBack";
-import { Photo } from "@components/Photo";
 
 export function Product() {
   const [image, setImage] = useState("");
@@ -33,24 +39,50 @@ export function Product() {
   }
   return (
     <Container behavior={Platform.OS === "ios" ? "padding" : undefined}>
-      <Header>
-        <ButtonBack />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Header>
+          <ButtonBack />
 
-        <Title>Cadastrar</Title>
+          <Title>Cadastrar</Title>
 
-        <TouchableOpacity>
-          <DeleteLabel>Delete</DeleteLabel>
-        </TouchableOpacity>
-      </Header>
+          <TouchableOpacity>
+            <DeleteLabel>Delete</DeleteLabel>
+          </TouchableOpacity>
+        </Header>
 
-      <Upload>
-        <Photo uri={image} />
-        <PickImageButton
-          title="Carregar"
-          type="secondary"
-          onPress={handlePickerImage}
-        />
-      </Upload>
+        <Upload>
+          <Photo uri={image} />
+          <PickImageButton
+            title="Carregar"
+            type="secondary"
+            onPress={handlePickerImage}
+          />
+        </Upload>
+
+        <Form>
+          <InputGroup>
+            <Label>Nome</Label>
+            <Input />
+          </InputGroup>
+
+          <InputGroup>
+            <InputGroupHeader>
+              <Label>Descrição</Label>
+              <MaxCharacters> 0 de 60 caracteries</MaxCharacters>
+            </InputGroupHeader>
+
+            <Input multiline maxLength={60} style={{ height: 80 }} />
+          </InputGroup>
+
+          <InputGroup>
+            <InputPrice size="P" />
+            <InputPrice size="M" />
+            <InputPrice size="G" />
+          </InputGroup>
+
+          <Button title="Cadastrar pizza" />
+        </Form>
+      </ScrollView>
     </Container>
   );
 }
