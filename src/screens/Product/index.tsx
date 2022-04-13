@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Platform, ScrollView, TouchableOpacity } from "react-native";
+import { Alert, Platform, ScrollView, TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { ButtonBack } from "@components/ButtonBack";
 import { Photo } from "@components/Photo";
@@ -22,6 +22,12 @@ import {
 
 export function Product() {
   const [image, setImage] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [priceSizeP, setPriceSizeP] = useState("");
+  const [priceSizeM, setPriceSizeM] = useState("");
+  const [priceSizeG, setPriceSizeG] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handlePickerImage() {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -37,6 +43,28 @@ export function Product() {
       }
     }
   }
+
+  async function handleAdd() {
+    if (!name.trim()) {
+      return Alert.alert("Cadastro", "Informe o nome da pizza.");
+    }
+
+    if (!description.trim()) {
+      return Alert.alert("Cadastro", "Faça uma breve descrição sobre a pizza.");
+    }
+
+    if (!image) {
+      return Alert.alert("Cadastro", "Adicione um imagem da pizza.");
+    }
+
+    if (!priceSizeP || !priceSizeM || !priceSizeG) {
+      return Alert.alert(
+        "Cadastro",
+        "Informe o preço de todos os tamanhos das pizzas."
+      );
+    }
+  }
+
   return (
     <Container behavior={Platform.OS === "ios" ? "padding" : undefined}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -62,7 +90,7 @@ export function Product() {
         <Form>
           <InputGroup>
             <Label>Nome</Label>
-            <Input />
+            <Input onChangeText={setName} value={name} />
           </InputGroup>
 
           <InputGroup>
@@ -71,16 +99,38 @@ export function Product() {
               <MaxCharacters> 0 de 60 caracteries</MaxCharacters>
             </InputGroupHeader>
 
-            <Input multiline maxLength={60} style={{ height: 80 }} />
+            <Input
+              multiline
+              maxLength={60}
+              style={{ height: 80 }}
+              onChangeText={setDescription}
+              value={description}
+            />
           </InputGroup>
 
           <InputGroup>
-            <InputPrice size="P" />
-            <InputPrice size="M" />
-            <InputPrice size="G" />
+            <InputPrice
+              size="P"
+              onChangeText={setPriceSizeP}
+              value={priceSizeP}
+            />
+            <InputPrice
+              size="M"
+              onChangeText={setPriceSizeM}
+              value={priceSizeM}
+            />
+            <InputPrice
+              size="G"
+              onChangeText={setPriceSizeG}
+              value={priceSizeG}
+            />
           </InputGroup>
 
-          <Button title="Cadastrar pizza" />
+          <Button
+            title="Cadastrar pizza"
+            isLoading={isLoading}
+            onPress={handleAdd}
+          />
         </Form>
       </ScrollView>
     </Container>
