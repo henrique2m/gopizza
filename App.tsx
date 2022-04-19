@@ -7,9 +7,12 @@ import { ThemeProvider } from "styled-components";
 import theme from "./src/theme";
 
 import { SignIn } from "@screens/SignIn";
-import { Product } from "@screens/Product";
+import { Home } from "@screens/Home";
 import { StatusBar } from "expo-status-bar";
 import { AuthProvider } from "@hooks/auth";
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs([`Setting a timer for a long period`]);
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -26,7 +29,7 @@ export default function App() {
       <StatusBar style="light" translucent backgroundColor="transparent" />
 
       <AuthProvider>
-        <Product></Product>
+        <Home></Home>
       </AuthProvider>
     </ThemeProvider>
   );

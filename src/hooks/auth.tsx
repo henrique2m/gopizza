@@ -13,6 +13,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
@@ -60,6 +61,8 @@ const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth();
 
 const db = getFirestore(firebaseApp);
+
+const storage = getStorage();
 
 export const AuthContext = createContext({} as AuthContextData);
 
@@ -172,4 +175,4 @@ function useAuth() {
   return context;
 }
 
-export { AuthProvider, useAuth };
+export { AuthProvider, useAuth, db, storage };
