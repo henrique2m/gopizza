@@ -13,6 +13,7 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useTheme } from "styled-components/native";
+import { Search } from "@components/search";
 
 export function Home() {
   const { COLORS } = useTheme();
@@ -29,6 +30,8 @@ export function Home() {
           <MaterialIcons name="logout" color={COLORS.TITLE} size={24} />
         </TouchableOpacity>
       </Header>
+
+      <Search onClear={() => {}} onSearch={() => {}} />
     </Container>
   );
 }
